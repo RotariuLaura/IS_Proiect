@@ -1,6 +1,7 @@
 package model;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 //Java bean - o clasa cu toate atributele private, care are constructor default si settere si gettere
 // si implementeaza interfata Serializable
@@ -46,7 +47,21 @@ public class Book {
     }
 
     @Override
-    public String toString(){
-        return String.format("Book author: %s | title: %s | Published Date: %s.", author, title, publishedDate);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
+        return Objects.equals(id, book.id) && Objects.equals(author, book.author) && Objects.equals(title, book.title) && Objects.equals(publishedDate, book.publishedDate);
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, author, title, publishedDate);
+    }
+
+    @Override
+    public String toString(){
+        return id + " - Book author: " + author + " | title: " + title + " | Published Date: " + publishedDate + "\n";
+    }
+
 }
