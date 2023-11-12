@@ -1,6 +1,8 @@
 package service;
 
+import model.AudioBook;
 import model.Book;
+import model.EBook;
 import repository.book.BookRepository;
 
 import java.time.LocalDate;
@@ -23,6 +25,7 @@ public class BookServiceImpl implements BookService{
         return bookRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Book with id: %d not found".formatted(id)));
     }
+
 
     @Override
     public boolean save(Book book) {

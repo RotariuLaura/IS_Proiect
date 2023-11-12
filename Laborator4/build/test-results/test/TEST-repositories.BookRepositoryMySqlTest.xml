@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="repositories.BookRepositoryMySqlTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2023-11-12T18:18:27" hostname="DESKTOP-CKVJG5I" time="0.083">
+  <properties/>
+  <testcase name="testFindAll()" classname="repositories.BookRepositoryMySqlTest" time="0.031"/>
+  <testcase name="testSave()" classname="repositories.BookRepositoryMySqlTest" time="0.02"/>
+  <testcase name="testFindById()" classname="repositories.BookRepositoryMySqlTest" time="0.003"/>
+  <testcase name="testRemoveAll()" classname="repositories.BookRepositoryMySqlTest" time="0.028"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

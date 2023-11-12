@@ -1,33 +1,27 @@
 package repository.book;
 
 import model.AudioBook;
-import model.Book;
-import model.EBook;
 import model.builder.AudioBookBuilder;
-import model.builder.BookBuilder;
-import model.builder.EBookBuilder;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class BookRepositoryMySql implements BookRepository{
+public class AudioBookRepositoryMySql implements AudioBookRepository{
     private final Connection connection;
-    public BookRepositoryMySql(Connection connection) {
-
+    public AudioBookRepositoryMySql(Connection connection) {
         this.connection = connection;
     }
-
     @Override
-    public List<Book> findAll() {
-        String sql = "SELECT * FROM book;";
-        List<Book> books = new ArrayList<>();
+    public List<AudioBook> findAllAudioBooks() {
+        String sql = "SELECT * FROM audiobook;";
+        List<AudioBook> books = new ArrayList<>();
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
-                books.add(getBookFromResultSet(resultSet));
+                books.add(getAudioBookFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -36,14 +30,14 @@ public class BookRepositoryMySql implements BookRepository{
     }
 
     @Override
-    public Optional<Book> findById(Long id) {
-        String sql = "SELECT * FROM book WHERE id = ?";
+    public Optional<AudioBook> findAudioBookById(Long id) {
+        String sql = "SELECT * FROM audiobook WHERE id = ?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                Optional<Book> book = Optional.of(getBookFromResultSet(resultSet));
+                Optional<AudioBook> book = Optional.of(getAudioBookFromResultSet(resultSet));
                 return book;
             }
         } catch (SQLException e) {
@@ -53,13 +47,14 @@ public class BookRepositoryMySql implements BookRepository{
     }
 
     @Override
-    public boolean save(Book book) {
-        String sql = "INSERT INTO book VALUES(null, ?, ?, ?);";
+    public boolean saveAudioBook(AudioBook book) {
+        String sql = "INSERT INTO audiobook VALUES(null, ?, ?, ?, ?);";
         try{
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, book.getAuthor());
             preparedStatement.setString(2, book.getTitle());
             preparedStatement.setDate(3, java.sql.Date.valueOf(book.getPublishedDate()));
+            preparedStatement.setString(4, String.valueOf(book.getRunTime()));
             int rowsInserted = preparedStatement.executeUpdate();
             return (rowsInserted != 1) ? false : true;
         } catch (SQLException e){
@@ -69,21 +64,22 @@ public class BookRepositoryMySql implements BookRepository{
     }
 
     @Override
-    public void removeAll() {
-        String sql = "TRUNCATE TABLE book;";
+    public void removeAllAudioBooks() {
+        String sql = "TRUNCATE TABLE audiobook;";
         try{
             Statement statement = connection.createStatement();
             statement.executeUpdate(sql);
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    private Book getBookFromResultSet(ResultSet resultSet) throws SQLException{
-        return new BookBuilder()
+    private AudioBook getAudioBookFromResultSet(ResultSet resultSet) throws SQLException{
+        return new AudioBookBuilder()
                 .setId(resultSet.getLong("id"))
                 .setAuthor(resultSet.getString("author"))
                 .setTitle(resultSet.getString("title"))
                 .setPublishedDate(new java.sql.Date(resultSet.getDate("publishedDate").getTime()).toLocalDate())
+                .setRunTime(resultSet.getInt("runTime"))
                 .build();
     }
 }

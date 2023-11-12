@@ -35,6 +35,28 @@ public class JDBCConnectionWrapper {
                 "UNIQUE KEY id_UNIQUE(id)" +
                 ") ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8";
         statement.execute(sql);
+
+        String sql2 = "CREATE TABLE IF NOT EXISTS ebook(" +
+                "id bigint NOT NULL AUTO_INCREMENT," +
+                "author varchar(500) NOT NULL," +
+                "title varchar(500) NOT NULL," +
+                "publishedDate datetime DEFAULT NULL," +
+                "format varchar(500) NOT NULL," +
+                "PRIMARY KEY(id)," +
+                "UNIQUE KEY id_UNIQUE(id)" +
+                ") ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8";
+        statement.execute(sql2);
+
+        String sql3 = "CREATE TABLE IF NOT EXISTS audiobook(" +
+                "id bigint NOT NULL AUTO_INCREMENT," +
+                "author varchar(500) NOT NULL," +
+                "title varchar(500) NOT NULL," +
+                "publishedDate datetime DEFAULT NULL," +
+                "runTime int NOT NULL," +
+                "PRIMARY KEY(id)," +
+                "UNIQUE KEY id_UNIQUE(id)" +
+                ") ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8";
+        statement.execute(sql3);
     }
 
     public boolean testConnection() throws SQLException{
