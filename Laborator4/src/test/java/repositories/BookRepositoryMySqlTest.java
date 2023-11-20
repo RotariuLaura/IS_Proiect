@@ -1,11 +1,9 @@
 package repositories;
 
 import database.DatabaseConnectionFactory;
-import database.JDBCConnectionWrapper;
 import model.Book;
 import model.builder.BookBuilder;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import repository.book.BookRepository;
 import repository.book.BookRepositoryCacheDecorator;

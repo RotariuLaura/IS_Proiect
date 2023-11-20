@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class BookRepositoryCacheDecorator extends BookRepositoryDecorator{
-    private Cache <Book> cache;
+    private Cache<Book> cache;
 
     public BookRepositoryCacheDecorator(BookRepository bookRepository, Cache <Book> cache){
         super(bookRepository);

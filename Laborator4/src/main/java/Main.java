@@ -1,38 +1,38 @@
+import controller.LoginController;
 import database.JDBCConnectionWrapper;
-import model.Book;
-import model.builder.BookBuilder;
-import repository.book.BookRepository;
-import repository.book.BookRepositoryCacheDecorator;
-import repository.book.BookRepositoryMySql;
-import repository.book.Cache;
-import service.BookService;
-import service.BookServiceImpl;
+import javafx.application.Application;
+import javafx.stage.Stage;
+import model.validator.UserValidator;
+import repository.security.RightsRolesRepository;
+import repository.security.RightsRolesRepositoryMySql;
+import repository.user.UserRepository;
+import repository.user.UserRepositoryMySql;
+import service.user.AuthenticationService;
+import service.user.AuthenticationServiceMySql;
+import view.LoginView;
 
-import java.time.LocalDate;
+import java.sql.Connection;
 
+import static database.Constants.Schemas.PRODUCTION;
 
-public class Main {
-    public static void main(String [] args){
-        JDBCConnectionWrapper connectionWrapper = new JDBCConnectionWrapper("test_library");
+public class Main extends Application {
+    public static void main(String[] args){
+        launch(args);
+    }
 
-        BookRepository bookRepository = new BookRepositoryCacheDecorator(
-                new BookRepositoryMySql(connectionWrapper.getConnection()),
-                new Cache<>());
-        BookService bookService = new BookServiceImpl(bookRepository);
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        final Connection connection = new JDBCConnectionWrapper(PRODUCTION).getConnection();
 
-        Book book = new BookBuilder()
-                .setTitle("Pinocchio")
-                .setAuthor("Carlo Colodi")
-                .setPublishedDate(LocalDate.of(2010, 6,2))
-                .build();
-        Book book2 = new BookBuilder()
-                .setTitle("The Christmas Holiday")
-                .setAuthor("Phillipa Ashley")
-                .setPublishedDate(LocalDate.of(2020, 10,6))
-                .build();
-        bookService.save(book);
-        bookService.save(book2);
-        System.out.println(bookService.findAll());
-        System.out.println(bookService.findById(1L));
+        final RightsRolesRepository rightsRolesRepository = new RightsRolesRepositoryMySql(connection);
+        final UserRepository userRepository = new UserRepositoryMySql(connection, rightsRolesRepository);
+
+        final AuthenticationService authenticationService = new AuthenticationServiceMySql(userRepository,
+                rightsRolesRepository);
+        final LoginView loginView = new LoginView(primaryStage);
+
+        final UserValidator userValidator = new UserValidator(userRepository);
+
+        new LoginController(loginView, authenticationService, userValidator);
     }
 }
