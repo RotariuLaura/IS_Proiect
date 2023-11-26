@@ -2,13 +2,12 @@ import controller.LoginController;
 import database.JDBCConnectionWrapper;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import model.validator.UserValidator;
 import repository.security.RightsRolesRepository;
 import repository.security.RightsRolesRepositoryMySql;
 import repository.user.UserRepository;
 import repository.user.UserRepositoryMySql;
 import service.user.AuthenticationService;
-import service.user.AuthenticationServiceMySql;
+import service.user.AuthenticationServiceImpl;
 import view.LoginView;
 
 import java.sql.Connection;
@@ -27,12 +26,10 @@ public class Main extends Application {
         final RightsRolesRepository rightsRolesRepository = new RightsRolesRepositoryMySql(connection);
         final UserRepository userRepository = new UserRepositoryMySql(connection, rightsRolesRepository);
 
-        final AuthenticationService authenticationService = new AuthenticationServiceMySql(userRepository,
+        final AuthenticationService authenticationService = new AuthenticationServiceImpl(userRepository,
                 rightsRolesRepository);
         final LoginView loginView = new LoginView(primaryStage);
 
-        final UserValidator userValidator = new UserValidator(userRepository);
-
-        new LoginController(loginView, authenticationService, userValidator);
+        new LoginController(loginView, authenticationService);
     }
 }
