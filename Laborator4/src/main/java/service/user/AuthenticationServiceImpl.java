@@ -27,12 +27,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public Notification<Boolean> register(String username, String password) {
         Role customerRole = rightsRolesRepository.findRoleByTitle(CUSTOMER);
-        if(userRepository.existsByUsername(username)){
-            Notification <Boolean> usernameExistsNotification = new Notification<>();
-            usernameExistsNotification.addError("Email is already taken!");
-            usernameExistsNotification.setResult(Boolean.FALSE);
-            return usernameExistsNotification;
-        }
         User user = new UserBuilder()
                 .setUsername(username)
                 .setPassword(password)
@@ -47,9 +41,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             userRegisterNotification.setResult(Boolean.FALSE);
         } else {
             user.setPassword(hashPassword(password));
-            userRegisterNotification.setResult(userRepository.save(user));
+            if(userRepository.save(user).equals(true)) {
+                userRegisterNotification.setResult(Boolean.TRUE);
+            } else {
+                userRegisterNotification.setResult(Boolean.FALSE);
+            }
         }
-
         return userRegisterNotification;
     }
 
