@@ -5,10 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="af2fe94f-06c3-4134-880e-4263ff27c360" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/launcher/ComponentFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/launcher/Launcher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.4/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/launcher/ComponentFactory.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/launcher/ComponentFactory.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/repository/user/UserRepositoryMySql.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/repository/user/UserRepositoryMySql.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/service/BookService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/service/BookServiceImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/launcher/ComponentFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/launcher/ComponentFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/repository/user/UserRepositoryMySql.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/repository/user/UserRepositoryMySql.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/service/user/AuthenticationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/user/AuthenticationServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,6 +109,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Launcher" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="launcher.Launcher" />
+      <module name="Laborator4.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="launcher.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Laborator4 [run]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -122,6 +146,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.Laborator4 [run]" />
+        <item itemvalue="Application.Launcher" />
         <item itemvalue="Application.Bootstrap" />
       </list>
     </recent_temporary>
@@ -151,7 +176,7 @@
       <workItem from="1699946650204" duration="115000" />
       <workItem from="1699946826071" duration="1287000" />
       <workItem from="1700500327751" duration="3938000" />
-      <workItem from="1701004174258" duration="7997000" />
+      <workItem from="1701004174258" duration="10252000" />
     </task>
     <servers />
   </component>

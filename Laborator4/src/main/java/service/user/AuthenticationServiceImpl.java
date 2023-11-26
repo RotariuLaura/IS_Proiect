@@ -27,7 +27,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public Notification<Boolean> register(String username, String password) {
         Role customerRole = rightsRolesRepository.findRoleByTitle(CUSTOMER);
-
+        if(userRepository.existsByUsername(username)){
+            Notification <Boolean> usernameExistsNotification = new Notification<>();
+            usernameExistsNotification.addError("Email is already taken!");
+            usernameExistsNotification.setResult(Boolean.FALSE);
+            return usernameExistsNotification;
+        }
         User user = new UserBuilder()
                 .setUsername(username)
                 .setPassword(password)

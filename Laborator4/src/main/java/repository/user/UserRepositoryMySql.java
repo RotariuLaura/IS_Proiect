@@ -25,6 +25,7 @@ public class UserRepositoryMySql implements UserRepository {
     public List<User> findAll() {
         return null;
     }
+    //rotariu.laura@yahoo.com' and 1=1; --  should not work after rewriting function
 
     @Override
     public Notification<User> findByUsernameAndPassword(String username, String password) {
