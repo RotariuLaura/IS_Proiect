@@ -12,9 +12,8 @@
       <change beforePath="$PROJECT_DIR$/.gradle/7.4/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/repository/user/UserRepositoryMySql.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/repository/user/UserRepositoryMySql.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/service/user/AuthenticationServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/repository/user/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/repository/user/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/service/user/AuthenticationServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/service/user/AuthenticationServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/repository/user/UserRepositoryMySql.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/repository/user/UserRepositoryMySql.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/service/user/AuthenticationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/user/AuthenticationServiceImpl.java" afterDir="false" />
     </list>
@@ -173,7 +172,7 @@
       <workItem from="1699946650204" duration="115000" />
       <workItem from="1699946826071" duration="1287000" />
       <workItem from="1700500327751" duration="3938000" />
-      <workItem from="1701004174258" duration="10824000" />
+      <workItem from="1701004174258" duration="11978000" />
     </task>
     <servers />
   </component>
