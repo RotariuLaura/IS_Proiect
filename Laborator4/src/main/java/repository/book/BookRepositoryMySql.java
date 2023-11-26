@@ -48,35 +48,18 @@ public class BookRepositoryMySql implements BookRepository {
         }
         return Optional.empty();
     }
-
-    /**
-     *
-     * How to reproduce a sql injection attack on insert statement
-     *
-     *
-     * 1) Uncomment the lines below and comment out the PreparedStatement part
-     * 2) For the Insert Statement DROP TABLE SQL Injection attack to succeed we will need multi query support to be added to our connection
-     * Add to JDBConnectionWrapper the following flag after the DB_URL + schema concatenation: + "?allowMultiQueries=true"
-     * 3) book.setAuthor("', '', null); DROP TABLE book; -- "); // this will delete the table book
-     * 3*) book.setAuthor("', '', null); SET FOREIGN_KEY_CHECKS = 0; SET GROUP_CONCAT_MAX_LEN=32768; SET @tables = NULL; SELECT GROUP_CONCAT('`', table_name, '`') INTO @tables FROM information_schema.tables WHERE table_schema = (SELECT DATABASE()); SELECT IFNULL(@tables,'dummy') INTO @tables; SET @tables = CONCAT('DROP TABLE IF EXISTS ', @tables); PREPARE stmt FROM @tables; EXECUTE stmt; DEALLOCATE PREPARE stmt; SET FOREIGN_KEY_CHECKS = 1; --"); // this will delete all tables. You are not required to know the table name anymore.
-     * 4) Run the program. You will get an exception on findAll() method because the test_library.book table does not exist anymore
-     */
-
-
     // ALWAYS use PreparedStatement when USER INPUT DATA is present
     // DON'T CONCATENATE Strings
     @Override
     public boolean save(Book book) {
-        String sql = "INSERT INTO book VALUES(null, ?, ?, ?);";
-        //String newSql = "INSERT INTO book VALUES(null, \'" + book.getAuthor() +"\', \'"+ book.getTitle()+"\', null );";
+        String sql = "INSERT INTO book VALUES(null, ?, ?, ?, ?, ?);";
         try{
-            //Statement statement = connection.createStatement();
-            //statement.executeUpdate(newSql);
-            //return true;
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, book.getAuthor());
             preparedStatement.setString(2, book.getTitle());
             preparedStatement.setDate(3, java.sql.Date.valueOf(book.getPublishedDate()));
+            preparedStatement.setDouble(4, book.getPrice());
+            preparedStatement.setInt(5, book.getStock());
             int rowsInserted = preparedStatement.executeUpdate();
             return (rowsInserted != 1) ? false : true;
         } catch (SQLException e){
@@ -101,6 +84,8 @@ public class BookRepositoryMySql implements BookRepository {
                 .setAuthor(resultSet.getString("author"))
                 .setTitle(resultSet.getString("title"))
                 .setPublishedDate(new java.sql.Date(resultSet.getDate("publishedDate").getTime()).toLocalDate())
+                .setPrice(resultSet.getDouble("price"))
+                .setStock(resultSet.getInt("stock"))
                 .build();
     }
 }

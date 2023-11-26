@@ -37,7 +37,6 @@ public class LoginView {
         initializeSceneTitle(gridPane);
 
         initializeFields(gridPane);
-
         primaryStage.show();
     }
 
@@ -83,6 +82,7 @@ public class LoginView {
         actiontarget.setFill(Color.FIREBRICK);
         gridPane.add(actiontarget, 1, 6);
     }
+
 
     public String getUsername() {
         return userTextField.getText();

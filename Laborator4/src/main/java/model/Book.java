@@ -13,6 +13,8 @@ public class Book {
     private String author;
     private String title;
     private LocalDate publishedDate;
+    private Double price;
+    private int stock;
 
     public Long getId() {
         return id;
@@ -34,6 +36,14 @@ public class Book {
         return title;
     }
 
+    public Double getPrice() {
+        return price;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -46,6 +56,14 @@ public class Book {
         this.publishedDate = publishedDate;
     }
 
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -56,6 +74,6 @@ public class Book {
 
     @Override
     public String toString(){
-        return String.format("Book author: %s | title: %s | Published Date: %s.", author, title, publishedDate);
+        return String.format("Book author: %s | title: %s | Published Date: %s | Price: %f | Stock: %d.", author, title, publishedDate, price, stock);
     }
 }
