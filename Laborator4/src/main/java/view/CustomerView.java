@@ -6,9 +6,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -26,6 +24,9 @@ public class CustomerView {
     private Button viewBooksButton;
     private Button buyBookButton;
     private TableView<Book> booksTable;
+    private Button confirmPurchaseButton;
+    private Book selectedBook;
+    private Spinner<Integer> quantitySpinner;
 
     public CustomerView(Stage primaryStage) {
         primaryStage.setTitle("Customers");
@@ -72,6 +73,7 @@ public class CustomerView {
         logInButtonHBox.getChildren().add(buyBookButton);
         gridPane.add(logInButtonHBox, 0, 1);
 
+        confirmPurchaseButton = new Button("Confirm Purchase");
     }
 
     public void initializeBooksTable(GridPane gridPane){
@@ -112,8 +114,55 @@ public class CustomerView {
     public void addBuyABookButtonListener(EventHandler<ActionEvent> buyABookButtonListener) {
         buyBookButton.setOnAction(buyABookButtonListener);
     }
+    public void addConfirmPurchaseButtonListener(EventHandler<ActionEvent> confirmPurchaseListener) {
+        confirmPurchaseButton.setOnAction(confirmPurchaseListener);
+    }
 
     public void displayBooks(ObservableList <Book> books){
         booksTable.setItems(books);
+        booksTable.refresh();
+    }
+
+    public void openBuyABookWindow() {
+        selectedBook = booksTable.getSelectionModel().getSelectedItem();
+        if(selectedBook != null) {
+            Stage buyStage = new Stage();
+            VBox buyLayout = new VBox(10);
+            buyLayout.setAlignment(Pos.CENTER);
+            Scene buyScene = new Scene(buyLayout, 350, 150);
+            buyStage.setTitle("Buy the book: " + selectedBook.getTitle());
+
+            Label quantityLabel = new Label("Select Quantity:");
+            quantitySpinner = new Spinner<>(1, selectedBook.getStock(), 1);
+
+            buyLayout.getChildren().addAll(quantityLabel, quantitySpinner, confirmPurchaseButton);
+            buyStage.setScene(buyScene);
+            buyStage.show();
+        } else {
+            displayError("You must select a book to buy first!");
+        }
+    }
+    public void displayError(String error){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(error);
+        alert.showAndWait();
+    }
+
+    public void displayMessage(String message){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    public Book getSelectedBook() {
+        return selectedBook;
+    }
+
+    public Spinner<Integer> getQuantitySpinner() {
+        return quantitySpinner;
     }
 }

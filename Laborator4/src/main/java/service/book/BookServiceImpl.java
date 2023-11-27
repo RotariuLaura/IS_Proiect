@@ -35,4 +35,9 @@ public class BookServiceImpl implements BookService {
         LocalDate now = LocalDate.now();
         return (int) ChronoUnit.YEARS.between(book.getPublishedDate(), now);
     }
+
+    @Override
+    public boolean updateStock(Long id, int stock) {
+        return bookRepository.updateStock(id, stock);
+    }
 }

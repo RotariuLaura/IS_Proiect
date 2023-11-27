@@ -40,6 +40,7 @@ public class UserRepositoryMySql implements UserRepository {
             ResultSet userResultSet = preparedStatement.executeQuery();
             if(userResultSet.next()) {
                 User user = new UserBuilder()
+                        .setId(userResultSet.getLong("id"))
                         .setUsername(userResultSet.getString("username"))
                         .setPassword(userResultSet.getString("password"))
                         .setRoles(rightsRolesRepository.findRolesForUser(userResultSet.getLong("id")))
@@ -61,7 +62,7 @@ public class UserRepositoryMySql implements UserRepository {
         Notification<Boolean> saveNotification = new Notification<>();
         try {
             PreparedStatement insertUserStatement = connection
-                    .prepareStatement("INSERT INTO user values (null, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+                    .prepareStatement("INSERT INTO user values (null, ?, ?)", 1);
             insertUserStatement.setString(1, user.getUsername());
             insertUserStatement.setString(2, user.getPassword());
             insertUserStatement.executeUpdate();

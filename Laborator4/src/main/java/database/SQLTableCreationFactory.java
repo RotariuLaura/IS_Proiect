@@ -1,11 +1,6 @@
 package database;
 
-import static database.Constants.Tables.BOOK;
-import static database.Constants.Tables.RIGHT;
-import static database.Constants.Tables.ROLE;
-import static database.Constants.Tables.ROLE_RIGHT;
-import static database.Constants.Tables.USER;
-import static database.Constants.Tables.USER_ROLE;
+import static database.Constants.Tables.*;
 
 public class SQLTableCreationFactory {
 
@@ -76,6 +71,27 @@ public class SQLTableCreationFactory {
                     "    REFERENCES role (id)" +
                     "    ON DELETE CASCADE" +
                     "    ON UPDATE CASCADE);";
+            case ORDER_TABLE -> "\tCREATE TABLE IF NOT EXISTS order_table(" +
+                    "  id INT NOT NULL AUTO_INCREMENT," +
+                    "  book_id INT(11) NOT NULL," +
+                    "  customer_id INT NOT NULL," +
+                    "  quantity INT NOT NULL," +
+                    "  total_price DOUBLE NOT NULL," +
+                    "  order_date DATETIME NOT NULL," +
+                    "  PRIMARY KEY (id)," +
+                    "  INDEX book_id_idx (book_id)," +
+                    "  INDEX customer_id_idx (customer_id)," +
+                    "  CONSTRAINT fk_book_id" +
+                    "    FOREIGN KEY (book_id)" +
+                    "    REFERENCES book (id)" +
+                    "    ON DELETE CASCADE" +
+                    "    ON UPDATE CASCADE," +
+                    "  CONSTRAINT fk_customer_id" +
+                    "    FOREIGN KEY (customer_id)" +
+                    "    REFERENCES user (id)" +
+                    "    ON DELETE CASCADE" +
+                    "    ON UPDATE CASCADE" +
+                    ") ENGINE=InnoDB DEFAULT CHARSET=utf8;";
             default -> "";
         };
     }

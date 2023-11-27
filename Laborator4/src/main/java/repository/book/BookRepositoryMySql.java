@@ -78,6 +78,21 @@ public class BookRepositoryMySql implements BookRepository {
             e.printStackTrace();
         }
     }
+    @Override
+    public boolean updateStock(Long bookId, int newStock) {
+        String sql = "UPDATE book SET stock = ? WHERE id = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, newStock);
+            preparedStatement.setLong(2, bookId);
+            int rowsUpdated = preparedStatement.executeUpdate();
+            return rowsUpdated == 1;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     private Book getBookFromResultSet(ResultSet resultSet) throws SQLException{
         return new BookBuilder()
                 .setId(resultSet.getLong("id"))
