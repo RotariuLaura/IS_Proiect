@@ -18,7 +18,7 @@ public class JDBCConnectionWrapper {
             Class.forName(JDBC_DRIVER);
             connection = DriverManager.getConnection(DB_URL + schema, USER, PASSWORD);
             //Bootstrap
-            createTables();
+            //createTables();
         } catch (ClassNotFoundException | SQLException e){
             e.printStackTrace();
         }
@@ -31,6 +31,8 @@ public class JDBCConnectionWrapper {
                 "author varchar(500) NOT NULL," +
                 "title  varchar(500) NOT NULL," +
                 "publishedDate datetime DEFAULT  NULL," +
+                "price double DEFAULT NULL," +
+                "stock int DEFAULT NULL," +
                 "PRIMARY KEY(id)," +
                 "UNIQUE KEY id_UNIQUE(id)" +
                 ") ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8";

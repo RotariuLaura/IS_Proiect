@@ -3,14 +3,18 @@ package launcher;
 import controller.LoginController;
 import database.DatabaseConnectionFactory;
 import javafx.stage.Stage;
+import repository.order.OrderRepository;
+import repository.order.OrderRepositoryMySql;
 import repository.book.BookRepository;
 import repository.book.BookRepositoryMySql;
 import repository.security.RightsRolesRepository;
 import repository.security.RightsRolesRepositoryMySql;
 import repository.user.UserRepository;
 import repository.user.UserRepositoryMySql;
-import service.BookService;
-import service.BookServiceImpl;
+import service.book.BookService;
+import service.book.BookServiceImpl;
+import service.order.OrderService;
+import service.order.OrderServiceImpl;
 import service.user.AuthenticationService;
 import service.user.AuthenticationServiceImpl;
 import view.LoginView;
@@ -25,7 +29,10 @@ public class ComponentFactory {
     private final RightsRolesRepository rightsRolesRepository;
     private final BookRepository bookRepository;
     private final BookService bookService;
+    private Stage primaryStage;
     private static ComponentFactory instance;
+    private final OrderRepository orderRepository;
+    private final OrderService orderService;
     public static ComponentFactory getInstance(Boolean componentsForTests, Stage stage){
         if(instance == null){
             instance = new ComponentFactory(componentsForTests, stage);
@@ -37,10 +44,13 @@ public class ComponentFactory {
         this.rightsRolesRepository = new RightsRolesRepositoryMySql(connection);
         this.userRepository = new UserRepositoryMySql(connection, rightsRolesRepository);
         this.authenticationService = new AuthenticationServiceImpl(userRepository, rightsRolesRepository);
-        this.loginView = new LoginView(stage);
-        this.loginController = new LoginController(loginView, authenticationService);
+        this.primaryStage = stage;
+        this.loginView = new LoginView(primaryStage);
+        this.loginController = new LoginController(loginView, authenticationService, this);
         this.bookRepository = new BookRepositoryMySql(connection);
         this.bookService = new BookServiceImpl(bookRepository);
+        this.orderRepository = new OrderRepositoryMySql(connection);
+        this.orderService = new OrderServiceImpl(orderRepository);
     }
 
     public AuthenticationService getAuthenticationService(){
@@ -70,4 +80,17 @@ public class ComponentFactory {
     public BookService getBookService() {
         return bookService;
     }
+
+    public OrderRepository getOrderRepository() {
+        return orderRepository;
+    }
+
+    public OrderService getOrderService() {
+        return orderService;
+    }
+
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
 }

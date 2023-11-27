@@ -11,4 +11,5 @@ public interface BookRepository {
     Optional <Book> findById(Long id);
     boolean save(Book book);
     void removeAll();
+    boolean updateStock(Long bookId, int newStock);
 }
