@@ -2,6 +2,7 @@ package repository.book;
 
 import model.Book;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,5 +40,17 @@ public class BookRepositoryCacheDecorator extends BookRepositoryDecorator{
     public boolean updateStock(Long bookId, int newStock) {
         cache.invalidateCache();
         return decoratedRepository.updateStock(bookId, newStock);
+    }
+
+    @Override
+    public boolean updateBook(Long bookId, String title, String author, LocalDate date, double price, int stock) {
+        cache.invalidateCache();
+        return decoratedRepository.updateBook(bookId, title, author, date, price, stock);
+    }
+
+    @Override
+    public boolean deleteBook(Long id) {
+        cache.invalidateCache();
+        return decoratedRepository.deleteBook(id);
     }
 }

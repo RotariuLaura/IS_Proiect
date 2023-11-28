@@ -60,29 +60,25 @@ public class CustomerController {
                 customerView.displayError("No stock for this book!");
                 return;
             }
-            if (selectedBook != null) {
-                Spinner<Integer> quantitySpinner = customerView.getQuantitySpinner();
-                int quantity = quantitySpinner.getValue();
-                double totalPrice = selectedBook.getPrice() * quantity;
-                java.util.Date currentDate = new java.util.Date();
-                java.sql.Date sqlDate = new java.sql.Date(currentDate.getTime());
-                try{
-                    if((orderService.insertOrder(selectedBook.getId(), customerId, quantity, totalPrice, sqlDate)))
-                    {
-                        int newStock = selectedBook.getStock() - quantity;
-                        selectedBook.setStock(newStock);
-                        bookService.updateStock(selectedBook.getId(), newStock);
-                        refreshBooksTable();
-                        customerView.displayMessage("Your order has been placed successfully!");
-                    } else {
-                        customerView.displayError("The order was not processed!");
-                    }
-                } catch (Exception e){
-                    e.printStackTrace();
+            Spinner<Integer> quantitySpinner = customerView.getQuantitySpinner();
+            int quantity = quantitySpinner.getValue();
+            double totalPrice = selectedBook.getPrice() * quantity;
+            java.util.Date currentDate = new java.util.Date();
+            java.sql.Date sqlDate = new java.sql.Date(currentDate.getTime());
+            try{
+                if((orderService.insertOrder(selectedBook.getId(), customerId, quantity, totalPrice, sqlDate)))
+                {
+                    int newStock = selectedBook.getStock() - quantity;
+                    selectedBook.setStock(newStock);
+                    bookService.updateStock(selectedBook.getId(), newStock);
+                    refreshBooksTable();
+                    customerView.displayMessage("Your order has been placed successfully!");
+                } else {
                     customerView.displayError("The order was not processed!");
                 }
-            } else {
-                customerView.displayError("You must select a book to buy first!");
+            } catch (Exception e){
+                e.printStackTrace();
+                customerView.displayError("The order was not processed!");
             }
         }
     }

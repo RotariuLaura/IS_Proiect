@@ -10,6 +10,7 @@ import service.book.BookServiceImpl;
 import service.order.OrderServiceImpl;
 import service.user.AuthenticationService;
 import view.CustomerView;
+import view.EmployeeView;
 import view.LoginView;
 
 public class LoginController {
@@ -43,9 +44,18 @@ public class LoginController {
                 User loggedInUser = loginNotification.getResult();
                 Long userId = loggedInUser.getId();
                 loginView.setActionTargetText("LogIn Successful!");
-                Stage primaryStage = componentFactory.getPrimaryStage();
-                CustomerView customerView = new CustomerView(primaryStage);
-                CustomerController customerController = new CustomerController(customerView, (BookServiceImpl) componentFactory.getBookService(), (OrderServiceImpl) componentFactory.getOrderService(), userId);
+                if(username.endsWith("@employee.com")) {
+                    Stage primaryStage = componentFactory.getPrimaryStage();
+                    EmployeeView employeeView = new EmployeeView(primaryStage);
+                    EmployeeController employeeController = new EmployeeController(employeeView, (BookServiceImpl) componentFactory.getBookService());
+                } else if (username.endsWith("@admin.com")) {
+
+                } else {
+                    Stage primaryStage = componentFactory.getPrimaryStage();
+                    CustomerView customerView = new CustomerView(primaryStage);
+                    CustomerController customerController = new CustomerController(customerView, (BookServiceImpl) componentFactory.getBookService(),
+                            (OrderServiceImpl) componentFactory.getOrderService(), userId);
+                }
             }
         }
     }
@@ -65,10 +75,18 @@ public class LoginController {
                 User loggedInUser = loginNotification.getResult();
                 Long userId = loggedInUser.getId();
                 loginView.setActionTargetText("Register successful!");
-                Stage primaryStage = componentFactory.getPrimaryStage();
-                CustomerView customerView = new CustomerView(primaryStage);
-                CustomerController customerController = new CustomerController(customerView, (BookServiceImpl) componentFactory.getBookService(),
-                        (OrderServiceImpl) componentFactory.getOrderService(), userId);
+                if(username.endsWith("employee.com")){
+                    Stage primaryStage = componentFactory.getPrimaryStage();
+                    EmployeeView employeeView = new EmployeeView(primaryStage);
+                    EmployeeController employeeController = new EmployeeController(employeeView, (BookServiceImpl) componentFactory.getBookService());
+                } else if(username.endsWith("@admin.com")) {
+
+                } else {
+                    Stage primaryStage = componentFactory.getPrimaryStage();
+                    CustomerView customerView = new CustomerView(primaryStage);
+                    CustomerController customerController = new CustomerController(customerView, (BookServiceImpl) componentFactory.getBookService(),
+                            (OrderServiceImpl) componentFactory.getOrderService(), userId);
+                }
             }
         }
     }
