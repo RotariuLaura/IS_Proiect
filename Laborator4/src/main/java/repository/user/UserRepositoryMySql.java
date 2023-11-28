@@ -43,6 +43,7 @@ public class UserRepositoryMySql implements UserRepository {
                         .setId(userResultSet.getLong("id"))
                         .setUsername(userResultSet.getString("username"))
                         .setPassword(userResultSet.getString("password"))
+                        .setSalt(userResultSet.getString("salt"))
                         .setRoles(rightsRolesRepository.findRolesForUser(userResultSet.getLong("id")))
                         .build();
                 findByUsernameAndPasswordNotification.setResult(user);
@@ -57,14 +58,39 @@ public class UserRepositoryMySql implements UserRepository {
         return findByUsernameAndPasswordNotification;
     }
 
+    public User findByUsername(String username) {
+        try {
+            String fetchUserSql =
+                    "SELECT * FROM `" + USER + "` WHERE `username` = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(fetchUserSql);
+            preparedStatement.setString(1, username);
+
+            ResultSet userResultSet = preparedStatement.executeQuery();
+            if (userResultSet.next()) {
+                return new UserBuilder()
+                        .setId(userResultSet.getLong("id"))
+                        .setUsername(userResultSet.getString("username"))
+                        .setPassword(userResultSet.getString("password"))
+                        .setSalt(userResultSet.getString("salt"))
+                        .setSalt(userResultSet.getString("salt"))
+                        .setRoles(rightsRolesRepository.findRolesForUser(userResultSet.getLong("id")))
+                        .build();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     @Override
     public Notification<Boolean> save(User user) {
         Notification<Boolean> saveNotification = new Notification<>();
         try {
             PreparedStatement insertUserStatement = connection
-                    .prepareStatement("INSERT INTO user values (null, ?, ?)", 1);
+                    .prepareStatement("INSERT INTO user values (null, ?, ?, ?)", 1);
             insertUserStatement.setString(1, user.getUsername());
             insertUserStatement.setString(2, user.getPassword());
+            insertUserStatement.setString(3, user.getSalt());
             insertUserStatement.executeUpdate();
 
             ResultSet rs = insertUserStatement.getGeneratedKeys();

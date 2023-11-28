@@ -1,7 +1,9 @@
 package model.builder;
-import java.util.List;
+
 import model.Role;
 import model.User;
+
+import java.util.List;
 
 public class UserBuilder {
 
@@ -23,6 +25,11 @@ public class UserBuilder {
 
     public UserBuilder setPassword(String password){
         user.setPassword(password);
+        return this;
+    }
+
+    public UserBuilder setSalt(String salt){
+        user.setSalt(salt);
         return this;
     }
 

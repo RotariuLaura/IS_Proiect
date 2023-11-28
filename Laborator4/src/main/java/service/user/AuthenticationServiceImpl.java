@@ -10,6 +10,8 @@ import repository.user.UserRepository;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
+import java.security.SecureRandom;
+import java.util.Base64;
 import java.util.Collections;
 
 import static database.Constants.Roles.CUSTOMER;
@@ -24,6 +26,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         this.rightsRolesRepository = rightsRolesRepository;
     }
 
+    private String generateSalt() {
+        SecureRandom random = new SecureRandom();
+        byte[] saltBytes = new byte[16];
+        random.nextBytes(saltBytes);
+        return Base64.getEncoder().encodeToString(saltBytes);
+    }
     @Override
     public Notification<Boolean> register(String username, String password) {
         Role customerRole = rightsRolesRepository.findRoleByTitle(CUSTOMER);
@@ -33,9 +41,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             usernameExistsNotification.setResult(Boolean.FALSE);
             return usernameExistsNotification;
         }
+        String salt = generateSalt();
         User user = new UserBuilder()
                 .setUsername(username)
                 .setPassword(password)
+                .setSalt(salt)
                 .setRoles(Collections.singletonList(customerRole))
                 .build();
 
@@ -46,7 +56,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             userValidator.getErrors().forEach(userRegisterNotification::addError);
             userRegisterNotification.setResult(Boolean.FALSE);
         } else {
-            user.setPassword(hashPassword(password));
+            user.setPassword(hashPassword(password, salt));
             if(userRepository.save(user).equals(true)) {
                 userRegisterNotification.setResult(Boolean.TRUE);
             } else {
@@ -58,7 +68,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public Notification<User> login(String username, String password) {
-        return userRepository.findByUsernameAndPassword(username, hashPassword(password));
+        if(userRepository.findByUsername(username) != null) {
+            String salt = userRepository.findByUsername(username).getSalt();
+            return userRepository.findByUsernameAndPassword(username, hashPassword(password, salt));
+        }
+        return userRepository.findByUsernameAndPassword(username, hashPassword(password, ""));
     }
 
     @Override
@@ -66,13 +80,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         return false;
     }
 
-    private String hashPassword(String password) {
+    private String hashPassword(String password, String salt) {
         try {
             // Sercured Hash Algorithm - 256
             // 1 byte = 8 biți
             // 1 byte = 1 char
+            String saltedPassword = password + salt;
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+            byte[] hash = digest.digest(saltedPassword.getBytes(StandardCharsets.UTF_8));
             StringBuilder hexString = new StringBuilder();
 
             for (byte b : hash) {

@@ -9,6 +9,7 @@ public class User {
     private Long id;
     private String username;
     private String password;
+    private String salt;
     private List<Role> roles;
 
     public Long getId() {
@@ -41,5 +42,13 @@ public class User {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 }
