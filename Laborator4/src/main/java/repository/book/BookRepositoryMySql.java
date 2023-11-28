@@ -4,6 +4,7 @@ import model.Book;
 import model.builder.BookBuilder;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -79,12 +80,42 @@ public class BookRepositoryMySql implements BookRepository {
         }
     }
     @Override
+    public boolean deleteBook(Long bookId) {
+        String sql = "DELETE FROM book WHERE id = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setLong(1, bookId);
+            int rowsUpdated = preparedStatement.executeUpdate();
+            return rowsUpdated == 1;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    @Override
     public boolean updateStock(Long bookId, int newStock) {
         String sql = "UPDATE book SET stock = ? WHERE id = ?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, newStock);
             preparedStatement.setLong(2, bookId);
+            int rowsUpdated = preparedStatement.executeUpdate();
+            return rowsUpdated == 1;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public boolean updateBook(Long bookId, String title, String author, LocalDate date, double price, int stock){
+        String sql = "UPDATE book SET title = ?, author = ?, publishedDate = ?, price = ?, stock = ? WHERE id = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, title);
+            preparedStatement.setString(2, author);
+            preparedStatement.setDate(3, Date.valueOf(date));
+            preparedStatement.setDouble(4, price);
+            preparedStatement.setInt(5, stock);
+            preparedStatement.setLong(6, bookId);
             int rowsUpdated = preparedStatement.executeUpdate();
             return rowsUpdated == 1;
         } catch (SQLException e) {

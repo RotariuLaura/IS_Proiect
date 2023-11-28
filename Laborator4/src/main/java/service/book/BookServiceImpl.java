@@ -40,4 +40,14 @@ public class BookServiceImpl implements BookService {
     public boolean updateStock(Long id, int stock) {
         return bookRepository.updateStock(id, stock);
     }
+
+    @Override
+    public boolean updateBook(Long bookId, String title, String author, LocalDate date, double price, int stock) {
+        return bookRepository.updateBook(bookId, title, author, date, price, stock);
+    }
+
+    @Override
+    public boolean deleteBook(Long id) {
+        return bookRepository.deleteBook(id);
+    }
 }
