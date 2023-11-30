@@ -29,13 +29,15 @@ public class ComponentFactory {
     private final RightsRolesRepository rightsRolesRepository;
     private final BookRepository bookRepository;
     private final BookService bookService;
-    private Stage primaryStage;
+    private final Stage primaryStage;
     private static ComponentFactory instance;
     private final OrderRepository orderRepository;
     private final OrderService orderService;
     public static ComponentFactory getInstance(Boolean componentsForTests, Stage stage){
-        if(instance == null){
-            instance = new ComponentFactory(componentsForTests, stage);
+        synchronized (ComponentFactory.class) {
+            if (instance == null){
+                instance = new ComponentFactory(componentsForTests, stage);
+            }
         }
         return instance;
     }

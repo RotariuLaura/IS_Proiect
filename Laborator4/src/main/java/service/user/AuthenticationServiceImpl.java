@@ -79,6 +79,42 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public boolean logout(User user) {
         return false;
     }
+    public Notification<Boolean> updateEmployeeDetails(Long employeeId, String newUsername, String newPassword) {
+        User user = userRepository.findById(employeeId);
+        if (user == null) {
+            Notification<Boolean> userUpdateNotification = new Notification<>();
+            userUpdateNotification.addError("Employee not found!");
+            userUpdateNotification.setResult(Boolean.FALSE);
+            return userUpdateNotification;
+        }
+        if (userRepository.existsByUsername(newUsername) && !user.getUsername().equals(newUsername)) {
+            Notification<Boolean> usernameExistsNotification = new Notification<>();
+            usernameExistsNotification.addError("Username is already taken!");
+            usernameExistsNotification.setResult(Boolean.FALSE);
+            return usernameExistsNotification;
+        }
+        user.setUsername(newUsername);
+        user.setPassword(newPassword);
+        UserValidator userValidator = new UserValidator(user);
+        boolean userValid = userValidator.validate();
+        Notification<Boolean> userUpdateNotification = new Notification<>();
+        if (!userValid) {
+            userValidator.getErrors().forEach(userUpdateNotification::addError);
+            userUpdateNotification.setResult(Boolean.FALSE);
+        } else {
+            String newSalt = generateSalt();
+            String hashedPassword = hashPassword(newPassword, newSalt);
+            user.setSalt(newSalt);
+            user.setPassword(hashedPassword);
+            if (userRepository.updateEmployee(employeeId, newUsername, hashedPassword, newSalt)) {
+                userUpdateNotification.setResult(Boolean.TRUE);
+            } else {
+                userUpdateNotification.setResult(Boolean.FALSE);
+            }
+        }
+        return userUpdateNotification;
+    }
+
 
     private String hashPassword(String password, String salt) {
         try {
@@ -100,5 +136,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
+    }
+
+    public UserRepository getUserRepository() {
+        return userRepository;
     }
 }

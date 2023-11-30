@@ -5,12 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="af2fe94f-06c3-4134-880e-4263ff27c360" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/controller/PDFReportGenerator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/Order.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/builder/OrderBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/controller/AdminController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/view/AdminView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.4/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/checksums/checksums.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.4/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/checksums/md5-checksums.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.4/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/checksums/sha1-checksums.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.4/dependencies-accessors/dependencies-accessors.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/dependencies-accessors/dependencies-accessors.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.lock" afterDir="false" />
@@ -20,32 +17,24 @@
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/controller/EmployeeController$ConfirmIntroduceListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/controller/EmployeeController$ConfirmIntroduceListener.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/controller/EmployeeController$ConfirmUpdateListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/controller/EmployeeController$ConfirmUpdateListener.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/controller/EmployeeController$DeleteABookListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/controller/EmployeeController$DeleteABookListener.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/controller/EmployeeController$IntroduceABookListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/controller/EmployeeController$IntroduceABookListener.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/controller/EmployeeController$UpdateABookListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/controller/EmployeeController$UpdateABookListener.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/controller/EmployeeController$ViewAllBooksListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/controller/EmployeeController$ViewAllBooksListener.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/controller/EmployeeController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/controller/EmployeeController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EmployeeBookSalesReport.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/EmployeeBookSalesReport.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/controller/LoginController$LoginButtonListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/controller/LoginController$LoginButtonListener.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/controller/LoginController$RegisterButtonListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/controller/LoginController$RegisterButtonListener.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/database/SQLTableCreationFactory.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/database/SQLTableCreationFactory.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/repository/order/OrderRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/repository/order/OrderRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/repository/order/OrderRepositoryMySql.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/repository/order/OrderRepositoryMySql.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/service/order/OrderService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/service/order/OrderService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/service/order/OrderServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/service/order/OrderServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/controller/LoginController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/controller/LoginController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/database/JDBCConnectionWrapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/database/JDBCConnectionWrapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/launcher/ComponentFactory.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/launcher/ComponentFactory.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/view/EmployeeView.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/view/EmployeeView.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/EmployeeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/EmployeeController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/database/SQLTableCreationFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database/SQLTableCreationFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/repository/order/OrderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/repository/order/OrderRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/repository/order/OrderRepositoryMySql.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/repository/order/OrderRepositoryMySql.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/service/order/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/order/OrderService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/service/order/OrderServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/order/OrderServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/PDFReportGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/PDFReportGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/database/JDBCConnectionWrapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database/JDBCConnectionWrapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/launcher/ComponentFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/launcher/ComponentFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/repository/security/RightsRolesRepositoryMySql.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/repository/security/RightsRolesRepositoryMySql.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/repository/user/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/repository/user/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/repository/user/UserRepositoryMySql.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/repository/user/UserRepositoryMySql.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/service/user/AuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/user/AuthenticationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/service/user/AuthenticationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/user/AuthenticationServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/view/EmployeeView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/EmployeeView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/LoginView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/LoginView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -217,7 +206,8 @@
       <workItem from="1701194663792" duration="12030000" />
       <workItem from="1701257265021" duration="4504000" />
       <workItem from="1701279307834" duration="9707000" />
-      <workItem from="1701338513843" duration="5017000" />
+      <workItem from="1701338513843" duration="5930000" />
+      <workItem from="1701358767868" duration="12255000" />
     </task>
     <servers />
   </component>
