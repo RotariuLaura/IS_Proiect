@@ -16,6 +16,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Book;
+import model.Order;
 
 import java.time.LocalDate;
 
@@ -25,24 +26,29 @@ public class EmployeeView {
     private Button introduceBookButton;
     private Button updateBookButton;
     private Button deleteBookButton;
+    private Button viewOrdersButton;
+    private Button confirmOrderButton;
+    private Button PDFReportButton;
     private TableView<Book> booksTable;
+    private TableView<Order> ordersTable;
     private Button confirmUpdateButton;
     private Button confirmIntroduceButton;
     private Book selectedBook;
-    private Spinner<Integer> quantitySpinner;
+    private Order selectedOrder;
     TextField titleField;
     TextField authorField;
     TextField publishedDateField;
     TextField priceField;
     TextField stockField;
+    GridPane gridPane;
 
     public EmployeeView(Stage primaryStage) {
         primaryStage.setTitle("Employees");
 
-        GridPane gridPane = new GridPane();
+        gridPane = new GridPane();
         initializeGridPane(gridPane);
 
-        Scene scene = new Scene(gridPane, 720, 480);
+        Scene scene = new Scene(gridPane, 850, 480);
         primaryStage.setScene(scene);
 
         initializeSceneTitle(gridPane);
@@ -54,20 +60,20 @@ public class EmployeeView {
         primaryStage.show();
     }
 
-    private void initializeGridPane(GridPane gridPane){
+    private void initializeGridPane(GridPane gridPane) {
         gridPane.setAlignment(Pos.CENTER);
         gridPane.setHgap(10);
         gridPane.setVgap(10);
         gridPane.setPadding(new Insets(25, 25, 25, 25));
     }
 
-    private void initializeSceneTitle(GridPane gridPane){
+    private void initializeSceneTitle(GridPane gridPane) {
         Text sceneTitle = new Text("Welcome to our Book Store");
         sceneTitle.setFont(Font.font("Tahome", FontWeight.NORMAL, 20));
         gridPane.add(sceneTitle, 0, 0, 2, 1);
     }
 
-    private void initializeFields(GridPane gridPane){
+    private void initializeFields(GridPane gridPane) {
 
         HBox buttonsRow = new HBox(10);
         buttonsRow.setAlignment(Pos.BOTTOM_CENTER);
@@ -76,8 +82,12 @@ public class EmployeeView {
         viewBooksButton = new Button("View all books");
         updateBookButton = new Button("Update book");
         deleteBookButton = new Button("Delete book");
+        viewOrdersButton = new Button("View orders");
+        confirmOrderButton = new Button("Complete order");
+        PDFReportButton = new Button("My PDF report");
 
-        buttonsRow.getChildren().addAll(introduceBookButton, viewBooksButton, updateBookButton, deleteBookButton);
+        buttonsRow.getChildren().addAll(introduceBookButton, viewBooksButton, updateBookButton,
+                deleteBookButton, viewOrdersButton, confirmOrderButton, PDFReportButton);
 
         gridPane.add(buttonsRow, 0, 1, 2, 1);
 
@@ -85,28 +95,28 @@ public class EmployeeView {
         confirmIntroduceButton = new Button("Confirm");
     }
 
-    public void initializeBooksTable(GridPane gridPane){
+    public void initializeBooksTable(GridPane gridPane) {
         booksTable = new TableView<>();
 
         TableColumn<Book, String> titleColumn = new TableColumn<>("Title");
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-        titleColumn.setMinWidth(120);
+        titleColumn.setMinWidth(130);
 
         TableColumn<Book, String> authorColumn = new TableColumn<>("Author");
         authorColumn.setCellValueFactory(new PropertyValueFactory<>("author"));
-        authorColumn.setMinWidth(120);
+        authorColumn.setMinWidth(130);
 
         TableColumn<Book, LocalDate> publishedDateColumn = new TableColumn<>("Published Date");
         publishedDateColumn.setCellValueFactory(new PropertyValueFactory<>("publishedDate"));
-        publishedDateColumn.setMinWidth(120);
+        publishedDateColumn.setMinWidth(130);
 
         TableColumn<Book, Double> priceColumn = new TableColumn<>("Price");
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
-        priceColumn.setMinWidth(120);
+        priceColumn.setMinWidth(130);
 
         TableColumn<Book, Integer> stockColumn = new TableColumn<>("Stock");
         stockColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
-        stockColumn.setMinWidth(120);
+        stockColumn.setMinWidth(130);
 
         booksTable.getColumns().addAll(titleColumn, authorColumn, publishedDateColumn, priceColumn, stockColumn);
         VBox booksTableBox = new VBox(booksTable);
@@ -115,6 +125,42 @@ public class EmployeeView {
 
         gridPane.add(booksTableBox, 0, 2, 2, 1);
     }
+
+    public void initializeOrdersTable(GridPane gridPane) {
+        ordersTable = new TableView<>();
+
+        TableColumn<Order, Long> bookIdColumn = new TableColumn<>("Book nr");
+        bookIdColumn.setCellValueFactory(new PropertyValueFactory<>("bookId"));
+        bookIdColumn.setMinWidth(110);
+
+        TableColumn<Order, Long> customerIdColumn = new TableColumn<>("Customer nr");
+        customerIdColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        customerIdColumn.setMinWidth(110);
+
+        TableColumn<Order, Long> employeeIdColumn = new TableColumn<>("Employee nr");
+        employeeIdColumn.setCellValueFactory(new PropertyValueFactory<>("employeeId"));
+        employeeIdColumn.setMinWidth(110);
+
+        TableColumn<Order, Integer> quantityColumn = new TableColumn<>("Quantity");
+        quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        quantityColumn.setMinWidth(110);
+
+        TableColumn<Order, Double> totalPriceColumn = new TableColumn<>("Total Price");
+        totalPriceColumn.setCellValueFactory(new PropertyValueFactory<>("totalPrice"));
+        totalPriceColumn.setMinWidth(110);
+
+        TableColumn<Order, LocalDate> orderDateColumn = new TableColumn<>("Order Date");
+        orderDateColumn.setCellValueFactory(new PropertyValueFactory<>("orderDate"));
+        orderDateColumn.setMinWidth(100);
+
+        ordersTable.getColumns().addAll(bookIdColumn, customerIdColumn, employeeIdColumn, quantityColumn, totalPriceColumn, orderDateColumn);
+        VBox ordersTableBox = new VBox(ordersTable);
+        ordersTableBox.setAlignment(Pos.CENTER);
+        ordersTableBox.setPadding(new Insets(20));
+
+        gridPane.add(ordersTableBox, 0, 2, 2, 1);
+    }
+
 
     public void addViewAllBooksButtonListener(EventHandler<ActionEvent> viewBooksButtonListener) {
         viewBooksButton.setOnAction(viewBooksButtonListener);
@@ -131,6 +177,15 @@ public class EmployeeView {
     public void addDeleteBookButtonListener(EventHandler<ActionEvent> deleteBookButtonListener) {
         deleteBookButton.setOnAction(deleteBookButtonListener);
     }
+
+    public void addViewOrdersButtonListener(EventHandler<ActionEvent> viewOrdersListener) {
+        viewOrdersButton.setOnAction(viewOrdersListener);
+    }
+
+    public void addConfirmOrderButtonListener(EventHandler<ActionEvent> confirmOrderListener) {
+        confirmOrderButton.setOnAction(confirmOrderListener);
+    }
+
     public void addConfirmUpdateButtonListener(EventHandler<ActionEvent> confirmUpdateListener) {
         confirmUpdateButton.setOnAction(confirmUpdateListener);
     }
@@ -139,9 +194,18 @@ public class EmployeeView {
         confirmIntroduceButton.setOnAction(confirmIntroduceListener);
     }
 
-    public void displayBooks(ObservableList <Book> books){
+    public void addPDFReportButtonListener(EventHandler<ActionEvent> PDFReportListener) {
+        PDFReportButton.setOnAction(PDFReportListener);
+    }
+
+    public void displayBooks(ObservableList<Book> books) {
         booksTable.setItems(books);
         booksTable.refresh();
+    }
+
+    public void displayOrders(ObservableList<Order> orders) {
+        ordersTable.setItems(orders);
+        ordersTable.refresh();
     }
 
     public void openUpdateABookWindow() {
@@ -196,7 +260,8 @@ public class EmployeeView {
         updateStage.setScene(updateScene);
         updateStage.show();
     }
-    public void displayError(String error){
+
+    public void displayError(String error) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
         alert.setHeaderText(null);
@@ -204,7 +269,7 @@ public class EmployeeView {
         alert.showAndWait();
     }
 
-    public void displayMessage(String message){
+    public void displayMessage(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Confirmation");
         alert.setHeaderText(null);
@@ -237,7 +302,11 @@ public class EmployeeView {
         return publishedDateField;
     }
 
-    public Spinner<Integer> getQuantitySpinner() {
-        return quantitySpinner;
+    public GridPane getGridPane() {
+        return gridPane;
+    }
+
+    public TableView<Order> getOrdersTable() {
+        return ordersTable;
     }
 }

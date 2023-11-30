@@ -76,12 +76,14 @@ public class SQLTableCreationFactory {
                     "  id INT NOT NULL AUTO_INCREMENT," +
                     "  book_id INT(11) NOT NULL," +
                     "  customer_id INT NOT NULL," +
+                    "  employee_id INT DEFAULT NULL," +
                     "  quantity INT NOT NULL," +
                     "  total_price DOUBLE NOT NULL," +
                     "  order_date DATETIME NOT NULL," +
                     "  PRIMARY KEY (id)," +
                     "  INDEX book_id_idx (book_id)," +
                     "  INDEX customer_id_idx (customer_id)," +
+                    "  INDEX employee_id_idx (employee_id)," +
                     "  CONSTRAINT fk_book_id" +
                     "    FOREIGN KEY (book_id)" +
                     "    REFERENCES book (id)" +
@@ -89,6 +91,11 @@ public class SQLTableCreationFactory {
                     "    ON UPDATE CASCADE," +
                     "  CONSTRAINT fk_customer_id" +
                     "    FOREIGN KEY (customer_id)" +
+                    "    REFERENCES user (id)" +
+                    "    ON DELETE CASCADE" +
+                    "    ON UPDATE CASCADE," +
+                    "  CONSTRAINT fk_employee_id" +
+                    "    FOREIGN KEY (employee_id)" +
                     "    REFERENCES user (id)" +
                     "    ON DELETE CASCADE" +
                     "    ON UPDATE CASCADE" +

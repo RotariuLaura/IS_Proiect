@@ -1,5 +1,6 @@
 package view;
 
+import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -100,5 +101,17 @@ public class LoginView {
 
     public void addRegisterButtonListener(EventHandler<ActionEvent> signInButtonListener) {
         signInButton.setOnAction(signInButtonListener);
+    }
+
+    public void addEmailChangeListener(ChangeListener<String> listener) {
+        userTextField.textProperty().addListener(listener);
+    }
+
+    public void disableRegisterButton() {
+        signInButton.setDisable(true);
+    }
+
+    public void enableRegisterButton() {
+        signInButton.setDisable(false);
     }
 }

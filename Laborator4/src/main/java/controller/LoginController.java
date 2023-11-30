@@ -21,6 +21,15 @@ public class LoginController {
 
     public LoginController(LoginView loginView, AuthenticationService authenticationService, ComponentFactory componentFactory) {
         this.loginView = loginView;
+        loginView.addEmailChangeListener((observable, oldValue, newValue) -> {
+            if (newValue.endsWith("@employee.com") || newValue.endsWith("@admin.com")) {
+                loginView.setActionTargetText("You cannot register as an employee or as an admin!");
+                loginView.disableRegisterButton();
+            } else {
+                loginView.setActionTargetText("");
+                loginView.enableRegisterButton();
+            }
+        });
         this.authenticationService = authenticationService;
 
         this.loginView.addLoginButtonListener(new LoginButtonListener());
@@ -47,8 +56,9 @@ public class LoginController {
                 if(username.endsWith("@employee.com")) {
                     Stage primaryStage = componentFactory.getPrimaryStage();
                     EmployeeView employeeView = new EmployeeView(primaryStage);
-                    EmployeeController employeeController = new EmployeeController(employeeView, (BookServiceImpl) componentFactory.getBookService());
-                } else if (username.endsWith("@admin.com")) {
+                    EmployeeController employeeController = new EmployeeController(employeeView, (BookServiceImpl) componentFactory.getBookService(),
+                            (OrderServiceImpl) componentFactory.getOrderService(), userId);
+                } else if (username.equals("admin@admin.com")) {
 
                 } else {
                     Stage primaryStage = componentFactory.getPrimaryStage();
@@ -75,18 +85,10 @@ public class LoginController {
                 User loggedInUser = loginNotification.getResult();
                 Long userId = loggedInUser.getId();
                 loginView.setActionTargetText("Register successful!");
-                if(username.endsWith("employee.com")){
-                    Stage primaryStage = componentFactory.getPrimaryStage();
-                    EmployeeView employeeView = new EmployeeView(primaryStage);
-                    EmployeeController employeeController = new EmployeeController(employeeView, (BookServiceImpl) componentFactory.getBookService());
-                } else if(username.endsWith("@admin.com")) {
-
-                } else {
-                    Stage primaryStage = componentFactory.getPrimaryStage();
-                    CustomerView customerView = new CustomerView(primaryStage);
-                    CustomerController customerController = new CustomerController(customerView, (BookServiceImpl) componentFactory.getBookService(),
-                            (OrderServiceImpl) componentFactory.getOrderService(), userId);
-                }
+                Stage primaryStage = componentFactory.getPrimaryStage();
+                CustomerView customerView = new CustomerView(primaryStage);
+                CustomerController customerController = new CustomerController(customerView, (BookServiceImpl) componentFactory.getBookService(),
+                        (OrderServiceImpl) componentFactory.getOrderService(), userId);
             }
         }
     }
