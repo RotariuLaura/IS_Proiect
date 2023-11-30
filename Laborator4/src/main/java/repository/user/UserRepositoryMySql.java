@@ -6,6 +6,7 @@ import model.validator.Notification;
 import repository.security.RightsRolesRepository;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import static database.Constants.Tables.USER;
@@ -25,6 +26,31 @@ public class UserRepositoryMySql implements UserRepository {
     public List<User> findAll() {
         return null;
     }
+    @Override
+    public List<User> findAllEmployees() {
+        List<User> employees = new ArrayList<>();
+        try {
+            String fetchEmployeeSql =
+                    "SELECT * FROM `" + USER + "` WHERE `username` LIKE '%@employee.com'";
+            PreparedStatement preparedStatement = connection.prepareStatement(fetchEmployeeSql);
+
+            ResultSet employeeResultSet = preparedStatement.executeQuery();
+            while (employeeResultSet.next()) {
+                User employee = new UserBuilder()
+                        .setId(employeeResultSet.getLong("id"))
+                        .setUsername(employeeResultSet.getString("username"))
+                        .setPassword(employeeResultSet.getString("password"))
+                        .setSalt(employeeResultSet.getString("salt"))
+                        .setRoles(rightsRolesRepository.findRolesForUser(employeeResultSet.getLong("id")))
+                        .build();
+                employees.add(employee);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return employees;
+    }
+
     //rotariu.laura@yahoo.com' and 1=1; --  should not work after rewriting function
 
     @Override
@@ -72,6 +98,28 @@ public class UserRepositoryMySql implements UserRepository {
                         .setUsername(userResultSet.getString("username"))
                         .setPassword(userResultSet.getString("password"))
                         .setSalt(userResultSet.getString("salt"))
+                        .setRoles(rightsRolesRepository.findRolesForUser(userResultSet.getLong("id")))
+                        .build();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public User findById(Long id) {
+        try {
+            String fetchUserSql =
+                    "SELECT * FROM `" + USER + "` WHERE `id` = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(fetchUserSql);
+            preparedStatement.setLong(1, id);
+
+            ResultSet userResultSet = preparedStatement.executeQuery();
+            if (userResultSet.next()) {
+                return new UserBuilder()
+                        .setId(userResultSet.getLong("id"))
+                        .setUsername(userResultSet.getString("username"))
+                        .setPassword(userResultSet.getString("password"))
                         .setSalt(userResultSet.getString("salt"))
                         .setRoles(rightsRolesRepository.findRolesForUser(userResultSet.getLong("id")))
                         .build();
@@ -137,6 +185,36 @@ public class UserRepositoryMySql implements UserRepository {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public boolean updateEmployee(Long id, String newName, String newPassword, String newSalt) {
+        try {
+            String updateEmployeeSql =
+                    "UPDATE `" + USER + "` SET `username` = ?, `password` = ?, `salt` = ? WHERE `id` = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(updateEmployeeSql);
+            preparedStatement.setString(1, newName);
+            preparedStatement.setString(2, newPassword);
+            preparedStatement.setString(3, newSalt);
+            preparedStatement.setLong(4, id);
+            int rowsUpdated = preparedStatement.executeUpdate();
+            return rowsUpdated > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean deleteEmployee(Long id) {
+        try {
+            String sql = "DELETE from user where id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setLong(1, id);
+            preparedStatement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 }

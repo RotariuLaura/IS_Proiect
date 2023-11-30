@@ -9,6 +9,8 @@ import model.validator.Notification;
 import service.book.BookServiceImpl;
 import service.order.OrderServiceImpl;
 import service.user.AuthenticationService;
+import service.user.AuthenticationServiceImpl;
+import view.AdminView;
 import view.CustomerView;
 import view.EmployeeView;
 import view.LoginView;
@@ -59,7 +61,10 @@ public class LoginController {
                     EmployeeController employeeController = new EmployeeController(employeeView, (BookServiceImpl) componentFactory.getBookService(),
                             (OrderServiceImpl) componentFactory.getOrderService(), userId);
                 } else if (username.equals("admin@admin.com")) {
-
+                    Stage primaryStage = componentFactory.getPrimaryStage();
+                    AdminView adminView = new AdminView(primaryStage);
+                    AdminController adminController = new AdminController(adminView, (AuthenticationServiceImpl) componentFactory.getAuthenticationService(),
+                            (BookServiceImpl) componentFactory.getBookService(), (OrderServiceImpl) componentFactory.getOrderService());
                 } else {
                     Stage primaryStage = componentFactory.getPrimaryStage();
                     CustomerView customerView = new CustomerView(primaryStage);

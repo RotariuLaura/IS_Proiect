@@ -11,36 +11,35 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import model.Book;
 import model.Order;
+import model.User;
 
 import java.time.LocalDate;
 
-public class EmployeeView {
-    private Button viewBooksButton;
-    private Button introduceBookButton;
-    private Button updateBookButton;
-    private Button deleteBookButton;
+public class AdminView {
+
+    private Button viewEmployeesButton;
+    private Button introduceEmployeeButton;
+    private Button updateEmployeeButton;
+    private Button deleteEmployeeButton;
     private Button viewOrdersButton;
-    private Button confirmOrderButton;
     private Button PDFReportButton;
-    private TableView<Book> booksTable;
+    private TableView<User> employeesTable;
     private TableView<Order> ordersTable;
     private Button confirmUpdateButton;
     private Button confirmIntroduceButton;
-    private Book selectedBook;
-    TextField titleField;
-    TextField authorField;
-    TextField publishedDateField;
-    TextField priceField;
-    TextField stockField;
-    GridPane gridPane;
+    private User selectedEmployee;
+    private TextField userField;
+    private TextField passwordField;
+    private GridPane gridPane;
+    private Text actiontarget;
 
-    public EmployeeView(Stage primaryStage) {
+    public AdminView(Stage primaryStage) {
         primaryStage.setTitle("Employees");
 
         gridPane = new GridPane();
@@ -76,16 +75,15 @@ public class EmployeeView {
         HBox buttonsRow = new HBox(10);
         buttonsRow.setAlignment(Pos.BOTTOM_CENTER);
 
-        introduceBookButton = new Button("Introduce book");
-        viewBooksButton = new Button("View all books");
-        updateBookButton = new Button("Update book");
-        deleteBookButton = new Button("Delete book");
+        introduceEmployeeButton = new Button("Add employee");
+        viewEmployeesButton = new Button("View employees");
+        updateEmployeeButton = new Button("Update employee");
+        deleteEmployeeButton = new Button("Delete employee");
         viewOrdersButton = new Button("View orders");
-        confirmOrderButton = new Button("Complete order");
-        PDFReportButton = new Button("My PDF report");
+        PDFReportButton = new Button("PDF report");
 
-        buttonsRow.getChildren().addAll(introduceBookButton, viewBooksButton, updateBookButton,
-                deleteBookButton, viewOrdersButton, confirmOrderButton, PDFReportButton);
+        buttonsRow.getChildren().addAll(introduceEmployeeButton, viewEmployeesButton, updateEmployeeButton,
+                deleteEmployeeButton, viewOrdersButton, PDFReportButton);
 
         gridPane.add(buttonsRow, 0, 1, 2, 1);
 
@@ -94,34 +92,26 @@ public class EmployeeView {
     }
 
     public void initializeBooksTable(GridPane gridPane) {
-        booksTable = new TableView<>();
+        employeesTable = new TableView<>();
 
-        TableColumn<Book, String> titleColumn = new TableColumn<>("Title");
-        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-        titleColumn.setMinWidth(130);
+        TableColumn<User, String> userColumn = new TableColumn<>("username");
+        userColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
+        userColumn.setMinWidth(200);
 
-        TableColumn<Book, String> authorColumn = new TableColumn<>("Author");
-        authorColumn.setCellValueFactory(new PropertyValueFactory<>("author"));
-        authorColumn.setMinWidth(130);
+        TableColumn<User, String> passwordColumn = new TableColumn<>("password");
+        passwordColumn.setCellValueFactory(new PropertyValueFactory<>("password"));
+        passwordColumn.setMinWidth(240);
 
-        TableColumn<Book, LocalDate> publishedDateColumn = new TableColumn<>("Published Date");
-        publishedDateColumn.setCellValueFactory(new PropertyValueFactory<>("publishedDate"));
-        publishedDateColumn.setMinWidth(130);
+        TableColumn<User, LocalDate> saltColumn = new TableColumn<>("salt");
+        saltColumn.setCellValueFactory(new PropertyValueFactory<>("salt"));
+        saltColumn.setMinWidth(190);
 
-        TableColumn<Book, Double> priceColumn = new TableColumn<>("Price");
-        priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
-        priceColumn.setMinWidth(130);
+        employeesTable.getColumns().addAll(userColumn, passwordColumn, saltColumn);
+        VBox employeesTableBox = new VBox(employeesTable);
+        employeesTableBox.setAlignment(Pos.CENTER);
+        employeesTableBox.setPadding(new Insets(20));
 
-        TableColumn<Book, Integer> stockColumn = new TableColumn<>("Stock");
-        stockColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
-        stockColumn.setMinWidth(130);
-
-        booksTable.getColumns().addAll(titleColumn, authorColumn, publishedDateColumn, priceColumn, stockColumn);
-        VBox booksTableBox = new VBox(booksTable);
-        booksTableBox.setAlignment(Pos.CENTER);
-        booksTableBox.setPadding(new Insets(20));
-
-        gridPane.add(booksTableBox, 0, 2, 2, 1);
+        gridPane.add(employeesTableBox, 0, 2, 2, 1);
     }
 
     public void initializeOrdersTable(GridPane gridPane) {
@@ -160,28 +150,24 @@ public class EmployeeView {
     }
 
 
-    public void addViewAllBooksButtonListener(EventHandler<ActionEvent> viewBooksButtonListener) {
-        viewBooksButton.setOnAction(viewBooksButtonListener);
+    public void addViewAllEmployeesButtonListener(EventHandler<ActionEvent> viewEmployeesButtonListener) {
+        viewEmployeesButton.setOnAction(viewEmployeesButtonListener);
     }
 
-    public void addIntroduceABookButtonListener(EventHandler<ActionEvent> introduceBookButtonListener) {
-        introduceBookButton.setOnAction(introduceBookButtonListener);
+    public void addIntroduceAEmployeeButtonListener(EventHandler<ActionEvent> introduceEmployeeButtonListener) {
+        introduceEmployeeButton.setOnAction(introduceEmployeeButtonListener);
     }
 
-    public void addUpdateBookButtonListener(EventHandler<ActionEvent> updateBookButtonListener) {
-        updateBookButton.setOnAction(updateBookButtonListener);
+    public void addUpdateEmployeeButtonListener(EventHandler<ActionEvent> updateEmployeeButtonListener) {
+        updateEmployeeButton.setOnAction(updateEmployeeButtonListener);
     }
 
-    public void addDeleteBookButtonListener(EventHandler<ActionEvent> deleteBookButtonListener) {
-        deleteBookButton.setOnAction(deleteBookButtonListener);
+    public void addDeleteEmployeeButtonListener(EventHandler<ActionEvent> deleteEmployeeButtonListener) {
+        deleteEmployeeButton.setOnAction(deleteEmployeeButtonListener);
     }
 
     public void addViewOrdersButtonListener(EventHandler<ActionEvent> viewOrdersListener) {
         viewOrdersButton.setOnAction(viewOrdersListener);
-    }
-
-    public void addConfirmOrderButtonListener(EventHandler<ActionEvent> confirmOrderListener) {
-        confirmOrderButton.setOnAction(confirmOrderListener);
     }
 
     public void addConfirmUpdateButtonListener(EventHandler<ActionEvent> confirmUpdateListener) {
@@ -196,9 +182,9 @@ public class EmployeeView {
         PDFReportButton.setOnAction(PDFReportListener);
     }
 
-    public void displayBooks(ObservableList<Book> books) {
-        booksTable.setItems(books);
-        booksTable.refresh();
+    public void displayEmployees(ObservableList<User> employees) {
+        employeesTable.setItems(employees);
+        employeesTable.refresh();
     }
 
     public void displayOrders(ObservableList<Order> orders) {
@@ -206,55 +192,52 @@ public class EmployeeView {
         ordersTable.refresh();
     }
 
-    public void openUpdateABookWindow() {
-        selectedBook = booksTable.getSelectionModel().getSelectedItem();
-        if (selectedBook != null) {
+    public void openUpdateAnEmployeeWindow() {
+        selectedEmployee = employeesTable.getSelectionModel().getSelectedItem();
+        if (selectedEmployee != null) {
             Stage updateStage = new Stage();
             VBox updateLayout = new VBox(10);
             updateLayout.setAlignment(Pos.CENTER);
-            Scene updateScene = new Scene(updateLayout, 350, 350);
-            updateStage.setTitle("Update Book: " + selectedBook.getTitle());
+            Scene updateScene = new Scene(updateLayout, 300, 300);
+            updateStage.setTitle("Update Employee");
 
-            titleField = new TextField(selectedBook.getTitle());
-            authorField = new TextField(selectedBook.getAuthor());
-            publishedDateField = new TextField(String.valueOf(selectedBook.getPublishedDate()));
-            priceField = new TextField(String.valueOf(selectedBook.getPrice()));
-            stockField = new TextField(String.valueOf(selectedBook.getStock()));
+            userField = new TextField(selectedEmployee.getUsername());
+            passwordField = new PasswordField();
             updateLayout.getChildren().addAll(
-                    new Label("Title:"), titleField,
-                    new Label("Author:"), authorField,
-                    new Label("Published Date:"), publishedDateField,
-                    new Label("Price:"), priceField,
-                    new Label("Stock:"), stockField,
+                    new Label("Username:"), userField,
+                    new Label("Password:"), passwordField,
                     confirmUpdateButton
             );
+            actiontarget = new Text();
+            actiontarget.setFill(Color.FIREBRICK);
+            gridPane.add(actiontarget, 1, 6);
+
             updateStage.setScene(updateScene);
             updateStage.show();
         } else {
-            displayError("You must select a book to update first!");
+            displayError("You must select an employee to update first!");
         }
     }
 
-    public void openIntroduceABookWindow() {
+    public void openIntroduceAnEmployeeWindow() {
         Stage updateStage = new Stage();
         VBox updateLayout = new VBox(10);
         updateLayout.setAlignment(Pos.CENTER);
-        Scene updateScene = new Scene(updateLayout, 300, 350);
-        updateStage.setTitle("Introduce a book");
+        Scene updateScene = new Scene(updateLayout, 300, 300);
+        updateStage.setTitle("Introduce employee");
 
-        titleField = new TextField();
-        authorField = new TextField();
-        priceField = new TextField();
-        stockField = new TextField();
-        publishedDateField = new TextField();
+        userField = new TextField();
+        passwordField = new PasswordField();
         updateLayout.getChildren().addAll(
-                new Label("Title:"), titleField,
-                new Label("Author:"), authorField,
-                new Label("Published Date:"), publishedDateField,
-                new Label("Price:"), priceField,
-                new Label("Stock:"), stockField,
+                new Label("Username:"), userField,
+                new Label("Password:"), passwordField,
                 confirmIntroduceButton
         );
+
+        actiontarget = new Text();
+        actiontarget.setFill(Color.FIREBRICK);
+        gridPane.add(actiontarget, 1, 6);
+
         updateStage.setScene(updateScene);
         updateStage.show();
     }
@@ -275,29 +258,17 @@ public class EmployeeView {
         alert.showAndWait();
     }
 
-    public Book getSelectedBook() {
-        selectedBook = booksTable.getSelectionModel().getSelectedItem();
-        return selectedBook;
+    public User getSelectedEmployee() {
+        selectedEmployee = employeesTable.getSelectionModel().getSelectedItem();
+        return selectedEmployee;
     }
 
-    public TextField getTitleField() {
-        return titleField;
+    public TextField getUserField() {
+        return userField;
     }
 
-    public TextField getAuthorField() {
-        return authorField;
-    }
-
-    public TextField getPriceField() {
-        return priceField;
-    }
-
-    public TextField getStockField() {
-        return stockField;
-    }
-
-    public TextField getPublishedDateField() {
-        return publishedDateField;
+    public TextField getPasswordField() {
+        return passwordField;
     }
 
     public GridPane getGridPane() {
@@ -307,4 +278,9 @@ public class EmployeeView {
     public TableView<Order> getOrdersTable() {
         return ordersTable;
     }
+
+    public void setActionTargetText(String text){
+        this.actiontarget.setText(text);
+    }
+
 }
