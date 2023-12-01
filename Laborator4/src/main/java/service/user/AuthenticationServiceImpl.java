@@ -15,6 +15,7 @@ import java.util.Base64;
 import java.util.Collections;
 
 import static database.Constants.Roles.CUSTOMER;
+import static database.Constants.Roles.EMPLOYEE;
 
 public class AuthenticationServiceImpl implements AuthenticationService {
 
@@ -34,7 +35,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
     @Override
     public Notification<Boolean> register(String username, String password) {
-        Role customerRole = rightsRolesRepository.findRoleByTitle(CUSTOMER);
+        Role role = rightsRolesRepository.findRoleByTitle(CUSTOMER);
+        if (username.endsWith("@employee.com")) {
+            role = rightsRolesRepository.findRoleByTitle(EMPLOYEE);
+        }
         if(userRepository.existsByUsername(username)){
             Notification <Boolean> usernameExistsNotification = new Notification<>();
             usernameExistsNotification.addError("Email is already taken!");
@@ -46,7 +50,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .setUsername(username)
                 .setPassword(password)
                 .setSalt(salt)
-                .setRoles(Collections.singletonList(customerRole))
+                .setRoles(Collections.singletonList(role))
                 .build();
 
         UserValidator userValidator = new UserValidator(user);
