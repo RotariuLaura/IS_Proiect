@@ -30,13 +30,15 @@ public class ComponentFactory {
     private final BookRepository bookRepository;
     private final BookService bookService;
     private final Stage primaryStage;
-    private static ComponentFactory instance;
+    private static volatile ComponentFactory instance;
     private final OrderRepository orderRepository;
     private final OrderService orderService;
     public static ComponentFactory getInstance(Boolean componentsForTests, Stage stage){
-        synchronized (ComponentFactory.class) {
-            if (instance == null){
-                instance = new ComponentFactory(componentsForTests, stage);
+        if(instance == null) {
+            synchronized (ComponentFactory.class) {
+                if (instance == null) {
+                    instance = new ComponentFactory(componentsForTests, stage);
+                }
             }
         }
         return instance;

@@ -125,11 +125,11 @@ public class CustomerView {
 
     public void openBuyABookWindow() {
         selectedBook = booksTable.getSelectionModel().getSelectedItem();
-        if(selectedBook.getStock() == 0){
-            displayError("No stock for this book!");
-            return;
-        }
         if(selectedBook != null) {
+            if(selectedBook.getStock() == 0){
+                displayError("No stock for this book!");
+                return;
+            }
             Stage buyStage = new Stage();
             VBox buyLayout = new VBox(10);
             buyLayout.setAlignment(Pos.CENTER);
